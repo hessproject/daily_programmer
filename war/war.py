@@ -50,6 +50,7 @@ class Player:
         pass
         #TODO: Play 3 (or less) cards face down, then a face up card
 
+
 class WarGame:
     def __init__(self):
         suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
@@ -87,12 +88,22 @@ def create_players(number_of_players):
     players = []
     for i in range(number_of_players):
         players.append(Player(i + 1))
-
     return players
 
+def create_game(type_of_game=None):
+    if type_of_game == 'war':
+        game = WarGame()
+    else: 
+        game = None
+    return game
+
 def main():
-    game = WarGame()
-    game.play()
+    game = create_game('war')
+
+    if game:
+        game.play()
+    else: 
+        print('No Game Selected')
 
 
 if __name__ == '__main__': main()
