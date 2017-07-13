@@ -50,6 +50,38 @@ class Player:
         pass
         #TODO: Play 3 (or less) cards face down, then a face up card
 
+class WarGame:
+    def __init__(self):
+        suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
+        self.deck = Deck(suits)
+        self.players = create_players(2)
+
+    def check_for_win(self):
+        player1 = self.players[0]
+        player2 = self.players[1]
+        if player1.hand and not player2.hand:
+            return 1
+        elif not player1.hand and player2.hand:
+            return 2
+        else:
+            return 0
+
+    def play(self):
+        self.deck.shuffle()
+
+        for player in cycle(self.players):
+            if not self.deck.cards:
+                break
+            card = self.deck.deal_card()
+            player.hand.append(card)
+
+        while True:
+            if self.check_for_win() == 0:
+                self.players[0].play_card()
+            else:
+                print("Player " + str(self.check_for_win()) + ' wins!')
+                break
+
 
 def create_players(number_of_players):
     players = []
@@ -58,40 +90,9 @@ def create_players(number_of_players):
 
     return players
 
-def check_for_win(game):
-    player1 = game['players'][0]
-    player2 = game['players'][1]
-    if player1.hand and not player2.hand:
-        return 1
-    elif not player1.hand and player2.hand:
-        return 2
-    else:
-        return 0
-
 def main():
-
-    suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
-
-    game = {
-        'deck': Deck(suits),
-        'players': create_players(2),
-    }
-
-    game['deck'].shuffle()
-
-    #Deal cards to players until deck is empty    
-    for player in cycle(game['players']):
-        if not game['deck'].cards:
-            break
-        card = game['deck'].deal_card()
-        player.hand.append(card)
-
-    for player in game['players']:
-        pp(player.hand)
-
-
-    while check_for_win(game['players']) == 0:
-        pass
+    game = WarGame()
+    game.play()
 
 
 if __name__ == '__main__': main()
