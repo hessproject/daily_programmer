@@ -1,4 +1,6 @@
 from random import shuffle
+from itertools import cycle
+from pprint import pprint as pp
 
 class Card:
     def __init__(self, value, suit):
@@ -17,47 +19,62 @@ class Deck:
         for i in card_values:
             for suit in suits:
                 self.cards.append(Card(i,suit))
-        
-    def deal_all_cards(self, list_of_players):
-        pass
-        #TODO: loop through players, dealing a card to each until deck is empty
 
+    def deal_card(self):
+        return self.cards.pop()
+            
     def shuffle(self):
         shuffle(self.cards)
 
-    def print_deck(self):
-        for card in self.cards:
-            print(str(card.value) + ' of ' + card.suit)
+    def deck_length(self):
+        return len(self.cards)
+
+
+    
 
 class Player:
-    def __init__(self, hand=[]):
-        self.hand = hand
+    def __init__(self, player_number):
+        self.player_number = player_number
+        self.hand = []
         self.field = []
 
+    def get_hand(self):
+        return self.hand
+
     def play_card(self):
-        pass
+        return self.hand.pop()
         #TODO: Take top card from hand and play face up on field
 
     def war(self):
         pass
         #TODO: Play 3 (or less) cards face down, then a face up card
-        
-
-    def add_to_bottom_of_hand(self):
-        pass
-        #TODO: Take cards from field and place at end of deck
 
 
+def create_players(number_of_players):
+    players = []
+    for i in range(number_of_players):
+        players.append(Player(i))
+
+    return players
 
 def main():
-    #Game logic here
+
     suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
 
+    #initialize and shuffle standard 52 card deck
     deck = Deck(suits)
     deck.shuffle()
-    deck.print_deck() #for debugging
+ 
+    #initialize players, and deal them hands from deck
+    players = create_players(2)
 
-    #player_1 = Player()
-    #player_2 = Player()
+    #Deal cards to players until deck is empty    
+    for player in cycle(players):
+        if not deck.cards:
+            break
+        card = deck.deal_card()
+        player.hand.append(card)
+
+
 
 if __name__ == '__main__': main()
