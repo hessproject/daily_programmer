@@ -32,9 +32,12 @@ class Deck:
 
 
 class Player:
-    def __init__(self, player_number):
+    def __init__(self, player_number, hand=None):
         self.player_number = player_number
-        self.hand = []
+        if hand is None:
+            self.hand = []
+        else:
+            self.hand = hand
         self.field = []
 
     def get_hand(self):
@@ -73,6 +76,10 @@ def main():
             break
         card = deck.deal_card()
         player.hand.append(card)
+
+    for player in players:
+        print(len(player.hand))
+        pp(player.get_hand())
 
 
 if __name__ == '__main__': main()
