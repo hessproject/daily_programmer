@@ -1,5 +1,6 @@
 from random import shuffle
 from itertools import cycle
+from abc import ABCMeta, abstractmethod
 from pprint import pprint as pp
 
 class Card:
@@ -51,7 +52,13 @@ class Player:
         #TODO: Play 3 (or less) cards face down, then a face up card
 
 
-class WarGame:
+class Game(metaclass=ABCMeta):
+    @abstractmethod
+    def play(self):
+        raise NotImplementedError()
+
+
+class WarGame(Game):
     def __init__(self):
         suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
         self.deck = Deck(suits)
