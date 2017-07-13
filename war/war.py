@@ -1,3 +1,5 @@
+from random import shuffle
+
 class Card:
     def __init__(self, value, suit):
         self.value = value
@@ -16,15 +18,12 @@ class Deck:
             for suit in suits:
                 self.cards.append(Card(i,suit))
         
-
-
     def deal_all_cards(self, list_of_players):
         pass
         #TODO: loop through players, dealing a card to each until deck is empty
 
     def shuffle(self):
-        pass
-        #TODO: randomize order of cards
+        shuffle(self.cards)
 
     def print_deck(self):
         for card in self.cards:
@@ -55,6 +54,7 @@ def main():
     suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
 
     deck = Deck(suits)
+    deck.shuffle()
     deck.print_deck() #for debugging
 
     #player_1 = Player()
