@@ -7,6 +7,7 @@ class Card:
         self.value = value
         self.suit = suit
 
+
 class Deck:
     def __init__(self, suits, aces_high=True):
         self.cards = []
@@ -29,8 +30,6 @@ class Deck:
     def deck_length(self):
         return len(self.cards)
 
-
-    
 
 class Player:
     def __init__(self, player_number):
@@ -74,7 +73,6 @@ def main():
             break
         card = deck.deal_card()
         player.hand.append(card)
-
 
 
 if __name__ == '__main__': main()
