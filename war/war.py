@@ -45,7 +45,6 @@ class Player:
 
     def play_card(self):
         return self.hand.pop()
-        #TODO: Take top card from hand and play face up on field
 
     def war(self):
         pass
@@ -55,31 +54,44 @@ class Player:
 def create_players(number_of_players):
     players = []
     for i in range(number_of_players):
-        players.append(Player(i))
+        players.append(Player(i + 1))
 
     return players
+
+def check_for_win(game):
+    player1 = game['players'][0]
+    player2 = game['players'][1]
+    if player1.hand and not player2.hand:
+        return 1
+    elif not player1.hand and player2.hand:
+        return 2
+    else:
+        return 0
 
 def main():
 
     suits = ['Spades', 'Diamonds', 'Clubs', 'Hearts']
 
-    #initialize and shuffle standard 52 card deck
-    deck = Deck(suits)
-    deck.shuffle()
- 
-    #initialize players, and deal them hands from deck
-    players = create_players(2)
+    game = {
+        'deck': Deck(suits),
+        'players': create_players(2),
+    }
+
+    game['deck'].shuffle()
 
     #Deal cards to players until deck is empty    
-    for player in cycle(players):
-        if not deck.cards:
+    for player in cycle(game['players']):
+        if not game['deck'].cards:
             break
-        card = deck.deal_card()
+        card = game['deck'].deal_card()
         player.hand.append(card)
 
-    for player in players:
-        print(len(player.hand))
-        pp(player.get_hand())
+    for player in game['players']:
+        pp(player.hand)
+
+
+    while check_for_win(game['players']) == 0:
+        pass
 
 
 if __name__ == '__main__': main()
